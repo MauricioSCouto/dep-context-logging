@@ -1,15 +1,10 @@
 package com.logging.context;
 
-import java.text.SimpleDateFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.logging.configuration.LoggingMaskingIntrospector;
+import com.logging.component.LoggingObjectMapper;
 import com.logging.model.PayloadLogModel;
 
 /**
@@ -23,7 +18,7 @@ import com.logging.model.PayloadLogModel;
 public class LoggingContext {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger("logger");
-	private ObjectMapper objectMapper;
+	private LoggingObjectMapper loggingObjectMapper;
 
 	private String contextId;
 	private PayloadLogModel payloadLogModel;
@@ -34,16 +29,10 @@ public class LoggingContext {
 	 * @param contextId ({@link String}) - id do contexto
 	 */
 	public LoggingContext(String contextId) {
-		objectMapper = new ObjectMapper();
+		loggingObjectMapper = new LoggingObjectMapper();
 
 		this.contextId = contextId;
-		this.payloadLogModel = new PayloadLogModel(objectMapper);
-		
-		objectMapper.setAnnotationIntrospector(new LoggingMaskingIntrospector());
-		objectMapper.registerModule(new JavaTimeModule());
-		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-		
-		objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS"));
+		this.payloadLogModel = new PayloadLogModel();
 	}
 	
 	/**
@@ -71,6 +60,6 @@ public class LoggingContext {
 	 *                                 payload.
 	 */
 	public void logPayloadLogModel() throws JsonProcessingException {
-		LOGGER.info(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(payloadLogModel));				
+		LOGGER.info(loggingObjectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(payloadLogModel));				
 	}
 }

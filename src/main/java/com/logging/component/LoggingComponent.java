@@ -1,4 +1,4 @@
-package com.logging.context;
+package com.logging.component;
 
 import java.util.List;
 
@@ -12,6 +12,9 @@ import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.logging.context.LoggingContext;
+import com.logging.context.LoggingContextConstants;
+import com.logging.context.LoggingContextMap;
 import com.logging.enumerator.MaskingStrategy;
 import com.logging.model.ExternalStepLogModel;
 import com.logging.model.InternalStepLogModel;

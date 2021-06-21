@@ -11,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.logging.component.LoggingObjectMapper;
 import com.logging.enumerator.MaskingStrategy;
 import com.logging.utils.MaskingUtils;
 
@@ -32,14 +32,12 @@ import com.logging.utils.MaskingUtils;
 	"threadName",
 	"request",
 	"response",
-	"internalStepLogModelList",
-	"externalStepLogModelList"
+	"internalSteps",
+	"externalSteps"
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_EMPTY)
 public class PayloadLogModel {
-	
-	private ObjectMapper objectMapper;
 	
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime startTime;
@@ -68,9 +66,7 @@ public class PayloadLogModel {
 	 * Construtor responsável pela inicialização dos componentes do modelo.
 	 * @param objectMapper 
 	 */
-	public PayloadLogModel(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
-		
+	public PayloadLogModel() {
 		startTime = LocalDateTime.now();
 		threadName = Thread.currentThread().getName();
 		internalStepLogModelList = new ArrayList<>();
@@ -149,6 +145,15 @@ public class PayloadLogModel {
 	public List<InternalStepLogModel> getInternalSteps() {
 		return internalStepLogModelList;
 	}
+	
+	/**
+	 * Retorna os logs das chamadas externas.
+	 * 
+	 * @return {@code List} - lista de logs das chamadas externas.
+	 */
+	public List<ExternalStepLogModel> getExternalSteps() {
+		return externalStepLogModelList;
+	}
 
 	/**
 	 * Adiciona um log interno.
@@ -206,7 +211,7 @@ public class PayloadLogModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public void addRequestParameters(Object parameters) {
-		Map<String, Object> parametersMap = objectMapper.convertValue(parameters, Map.class);
+		Map<String, Object> parametersMap = new LoggingObjectMapper().convertValue(parameters, Map.class);
 		request.setParameters(parametersMap);
 	}
 	
@@ -217,7 +222,7 @@ public class PayloadLogModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public void addRequestBody(Object body) {
-		Map<String, Object> bodyMap = objectMapper.convertValue(body, Map.class);		
+		Map<String, Object> bodyMap = new LoggingObjectMapper().convertValue(body, Map.class);		
 		request.setBody(bodyMap);
 	}
 
@@ -228,7 +233,7 @@ public class PayloadLogModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public void addResponseBody(Object body) {
-		Map<String, Object> bodyMap = objectMapper.convertValue(body, Map.class);		
+		Map<String, Object> bodyMap = new LoggingObjectMapper().convertValue(body, Map.class);		
 		response.setBody(bodyMap);
 	}
 	

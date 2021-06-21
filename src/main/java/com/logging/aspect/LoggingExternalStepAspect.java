@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.logging.annotation.ExternalStep;
-import com.logging.context.LoggingComponent;
+import com.logging.component.LoggingComponent;
 import com.logging.model.ExternalStepLogModel;
 
 /**
@@ -53,6 +53,7 @@ public class LoggingExternalStepAspect {
 		externalStepLogModel.setEndTime(endTime);
 		externalStepLogModel.setDuration(duration);
 		externalStepLogModel.setStepId(routeStepAnnotation.stepId());
+		externalStepLogModel.setStatus("Executed");
 				
 		loggingComponent.addExternalStepLog(externalStepLogModel);
 	}	

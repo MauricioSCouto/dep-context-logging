@@ -11,7 +11,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 
-import com.logging.context.LoggingComponent;
+import com.logging.component.LoggingComponent;
 import com.logging.model.ExternalStepLogModel;
 
 /**
@@ -43,7 +43,7 @@ public class LoggingHttpRequestInterceptor implements ClientHttpRequestIntercept
 		externalStepLogModel.setEndTime(endTime);
 		externalStepLogModel.setDuration(duration);
 		externalStepLogModel.setStepId(request.getURI().toString());
-		externalStepLogModel.setStatus(clientHttpResponse.getStatusText());
+		externalStepLogModel.setStatus(clientHttpResponse.getStatusCode().toString());
 		
 		loggingComponent.addExternalStepLog(externalStepLogModel);
 		

@@ -13,7 +13,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.logging.context.LoggingComponent;
+import com.logging.component.LoggingComponent;
 import com.logging.context.LoggingContext;
 import com.logging.context.LoggingContextFactory;
 import com.logging.context.LoggingContextMap;
