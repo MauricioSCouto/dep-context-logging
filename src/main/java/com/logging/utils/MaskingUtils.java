@@ -11,8 +11,13 @@ import com.logging.enumerator.MaskingStrategy;
  * @since 2021-06-12
  *
  */
-public class MaskingUtils {
+public final class MaskingUtils {
 
+	/**
+	 * Construtor privado para evitar instanciação.
+	 */
+	private MaskingUtils() {}
+	
 	/**
 	 * Realiza o mascaramento do valor indicado com base na estratégia indicada.
 	 * 
