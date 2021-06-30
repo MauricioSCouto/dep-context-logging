@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
-import com.logging.inteceptor.LoggingHttpRequestInterceptor;
+import com.logging.interceptor.LoggingHttpRequestInterceptor;
 
 /**
  * @author Mauricio Souza Couto

@@ -1,4 +1,4 @@
-package com.logging.inteceptor;
+package com.logging.interceptor;
 
 import java.io.IOException;
 import java.time.Duration;
